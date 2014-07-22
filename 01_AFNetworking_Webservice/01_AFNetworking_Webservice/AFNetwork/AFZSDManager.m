@@ -7,6 +7,7 @@
 //
 
 #import "AFZSDManager.h"
+#import "ServiceArgs.h"
 
 //#import "AFXMLRequestOperation.h"
 
@@ -52,5 +53,63 @@
     return self;
 }
 
+- (AFHTTPRequestOperation *)POSTMethod:(NSString *)methodName
+                      parameters:(NSArray *)paramsArray
+                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+    
+    ServiceArgs *args = [[ServiceArgs alloc] initWithMethodName:methodName soapParamsArray:paramsArray];
+    [self requestWithServerArgs:args];
+    
+    return [self POST:[args serviceURL] parameters:nil success:success failure:failure];
+}
 
+- (void)requestWithServerArgs:(ServiceArgs*)args{
+    /*
+     NSString *msgLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
+     AFHTTPRequestOperation  *request=[AFHTTPRequestOperation requestWithURL:args.webURL];
+     
+     //以下对请求信息添加属性前四句是必有的，第五句是soap信息。
+     [request addRequestHeader:@"Host" value:[args.webURL host]];
+     [request addRequestHeader:@"Content-Type" value:@"text/xml; charset=utf-8"];
+     [request addRequestHeader:@"Content-Length" value:msgLength];
+     [request addRequestHeader:@"SOAPAction" value:[self soapAction:args.serviceNameSpace methodName:args.methodName]];
+     [request setRequestMethod:@"POST"];
+     
+     //设置用户信息
+     //[self.httpRequest setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:args.methodName,@"name", nil]];
+     
+     //传soap信息
+     [request appendPostData:[args.soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
+     [request setValidatesSecureCertificate:NO];
+     [request setTimeOutSeconds:30.0];//表示30秒请求超时
+     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+     
+     return request;
+     */
+    
+    NSString *msgLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
+    NSString *soapAction = [self soapAction:args.serviceNameSpace methodName:args.methodName];
+    
+    [self.requestSerializer setValue:[args.webURL host] forHTTPHeaderField:@"Host"];
+    [self.requestSerializer setValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"content-type"];
+    [self.requestSerializer setValue:msgLength forHTTPHeaderField:@"Content-Length"];
+    [self.requestSerializer setValue:soapAction forHTTPHeaderField:@"SOAPAction"];
+    
+//    self.requestSerializer.
+}
+
+#pragma mark - private
+- (NSString*)soapAction:(NSString*)namespace methodName:(NSString*)methodName{
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"/$" options:0 error:nil];
+    NSUInteger numberOfMatches = [regex numberOfMatchesInString:namespace options:0 range:NSMakeRange(0, [namespace length])];
+    //NSArray *array=[regex matchesInString:namespace options:0 range:NSMakeRange(0, [namespace length])];
+    
+    if(numberOfMatches>0){
+        return [NSString stringWithFormat:@"%@%@",namespace,methodName];
+    }
+#warning ---- soapAction generate
+    //return [NSString stringWithFormat:@"%@/ZSDServices/%@",[namespace stringByReplacingOccurrencesOfString:@"https:" withString:@"http:"],methodName];
+    return [NSString stringWithFormat:@"%@/%@",[namespace stringByReplacingOccurrencesOfString:@"https:" withString:@"http:"],methodName];
+}
 @end

@@ -145,7 +145,7 @@
 -(AFHTTPRequestOperation *)requestWithServerArgs:(ServiceArgs*)args{
     /*
     NSString *msgLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
-    AFHTTPRequestOperation  *request=[AFHTTPRequestOperation  requestWithURL:args.webURL];
+    AFHTTPRequestOperation  *request=[AFHTTPRequestOperation requestWithURL:args.webURL];
     
     //以下对请求信息添加属性前四句是必有的，第五句是soap信息。
     [request addRequestHeader:@"Host" value:[args.webURL host]];
@@ -166,7 +166,12 @@
     return request;
      */
     
-    return nil;
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:args.webURL];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+
+//    operation.request.h
+    
+    return operation;
 }
 
 -(void)asynService:(ServiceArgs*)args{
@@ -229,20 +234,39 @@
 }
 
 -(AFHTTPRequestOperation *)asynService:(ServiceArgs*)args progress:(void(^)(AFHTTPRequestOperation *))progress success:(void(^)(ServiceResult*))finished failed:(void(^)(NSError *error,NSDictionary *userInfo))failed{
-    /*
-     
+    
     //__block AFHTTPRequestOperation  *request=[self requestWithServerArgs:args];
     
     AFHTTPRequestOperation  *request=[self requestWithServerArgs:args];
+    
     if (progress) {
         progress(request);
     }
+    
+    [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        ServiceResult *serviceresult=[ServiceResult requestResult:request];
+        if (finished) {
+            finished(serviceresult);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failed) {
+            // 取消时不显示
+            if ([[request.error description]  rangeOfString:@"cancelled"].location == NSNotFound  ) {
+                failed(request.error,request.userInfo);
+            }
+        }
+    }];
+    
+    [request start];
+    
+    /*
     [request setCompletionBlock:^{
         ServiceResult *serviceresult=[ServiceResult requestResult:request];
         if (finished) {
             finished(serviceresult);
         }
     }];
+    
     [request setFailedBlock:^{
         if (failed) {
             // 取消时不显示
@@ -252,10 +276,9 @@
         }
     }];
     [request startAsynchronous];
+    */
     
     return request;
-     */
-    return nil;
 }
 
 -(void)asynServiceMethodName:(NSString*)methodName delegate:(id<ServiceHandlerDelegate>)theDelegate{

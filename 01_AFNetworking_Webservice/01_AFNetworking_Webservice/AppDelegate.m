@@ -37,10 +37,23 @@
     [operation start];
     */
     
+    //访问帖子
+    /*
     NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1, 1, 20];
     [[AFZSDManager sharedInstance] GET:url parameters
                                       :nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",operation.responseString);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"fail");
+    }];
+    */
+    
+    NSMutableArray *params=[NSMutableArray array];
+    [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"13467803712",@"mobileCode", nil]];
+    [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"userID", nil]];
+    
+    [[AFZSDManager sharedInstance] POSTMethod:@"getMobileCodeInfo" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         NSLog(@"%@",operation.responseString);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"fail");
     }];

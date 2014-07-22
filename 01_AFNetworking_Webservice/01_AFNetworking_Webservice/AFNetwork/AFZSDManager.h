@@ -12,4 +12,9 @@
 
 + (AFZSDManager *)sharedInstance;
 
+- (AFHTTPRequestOperation *)POSTMethod:(NSString *)methodName
+                            parameters:(NSArray *)paramsArray
+                               success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                               failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end
