@@ -19,6 +19,13 @@
 		47F870FA197D4CFE00856BE2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F870E2197D4CFE00856BE2 /* UIKit.framework */; };
 		47F87102197D4CFE00856BE2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 47F87100197D4CFE00856BE2 /* InfoPlist.strings */; };
 		47F87104197D4CFE00856BE2 /* _1_AFNetworking_WebserviceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F87103197D4CFE00856BE2 /* _1_AFNetworking_WebserviceTests.m */; };
+		47F87129197D5AD900856BE2 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F87121197D5A4700856BE2 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		47F8712A197D5AD900856BE2 /* XmlNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F87123197D5A4700856BE2 /* XmlNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		47F8712B197D5AD900856BE2 /* XmlParseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F87125197D5A4700856BE2 /* XmlParseHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		47F8712D197D5C2D00856BE2 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F8712C197D5C2D00856BE2 /* libxml2.dylib */; };
+		47F87134197D5C4A00856BE2 /* ServiceArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F8712F197D5C4A00856BE2 /* ServiceArgs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		47F87135197D5C4A00856BE2 /* ServiceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F87131197D5C4A00856BE2 /* ServiceHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		47F87136197D5C4A00856BE2 /* ServiceResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F87133197D5C4A00856BE2 /* ServiceResult.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		863139856BCA43FC89CBF4B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EEF74BD15640DF885D1E3A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +58,21 @@
 		47F870FF197D4CFE00856BE2 /* 01_AFNetworking_WebserviceTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "01_AFNetworking_WebserviceTests-Info.plist"; sourceTree = "<group>"; };
 		47F87101197D4CFE00856BE2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		47F87103197D4CFE00856BE2 /* _1_AFNetworking_WebserviceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _1_AFNetworking_WebserviceTests.m; sourceTree = "<group>"; };
+		47F8711E197D5A4700856BE2 /* GDataDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataDefines.h; sourceTree = "<group>"; };
+		47F8711F197D5A4700856BE2 /* GDataTargetNamespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataTargetNamespace.h; sourceTree = "<group>"; };
+		47F87120197D5A4700856BE2 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		47F87121197D5A4700856BE2 /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
+		47F87122197D5A4700856BE2 /* XmlNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlNode.h; sourceTree = "<group>"; };
+		47F87123197D5A4700856BE2 /* XmlNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XmlNode.m; sourceTree = "<group>"; };
+		47F87124197D5A4700856BE2 /* XmlParseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlParseHelper.h; sourceTree = "<group>"; };
+		47F87125197D5A4700856BE2 /* XmlParseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XmlParseHelper.m; sourceTree = "<group>"; };
+		47F8712C197D5C2D00856BE2 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		47F8712E197D5C4A00856BE2 /* ServiceArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceArgs.h; sourceTree = "<group>"; };
+		47F8712F197D5C4A00856BE2 /* ServiceArgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceArgs.m; sourceTree = "<group>"; };
+		47F87130197D5C4A00856BE2 /* ServiceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceHandler.h; sourceTree = "<group>"; };
+		47F87131197D5C4A00856BE2 /* ServiceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceHandler.m; sourceTree = "<group>"; };
+		47F87132197D5C4A00856BE2 /* ServiceResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceResult.h; sourceTree = "<group>"; };
+		47F87133197D5C4A00856BE2 /* ServiceResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47F8712D197D5C2D00856BE2 /* libxml2.dylib in Frameworks */,
 				47F870E1197D4CFE00856BE2 /* CoreGraphics.framework in Frameworks */,
 				47F870E3197D4CFE00856BE2 /* UIKit.framework in Frameworks */,
 				47F870DF197D4CFE00856BE2 /* Foundation.framework in Frameworks */,
@@ -101,6 +124,7 @@
 		47F870DD197D4CFE00856BE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				47F8712C197D5C2D00856BE2 /* libxml2.dylib */,
 				47F870DE197D4CFE00856BE2 /* Foundation.framework */,
 				47F870E0197D4CFE00856BE2 /* CoreGraphics.framework */,
 				47F870E2197D4CFE00856BE2 /* UIKit.framework */,
@@ -113,6 +137,8 @@
 		47F870E4197D4CFE00856BE2 /* 01_AFNetworking_Webservice */ = {
 			isa = PBXGroup;
 			children = (
+				47F8711D197D5A3B00856BE2 /* xml */,
+				47F8710D197D579F00856BE2 /* webService */,
 				47F870ED197D4CFE00856BE2 /* AppDelegate.h */,
 				47F870EE197D4CFE00856BE2 /* AppDelegate.m */,
 				47F870F0197D4CFE00856BE2 /* Images.xcassets */,
@@ -148,6 +174,34 @@
 				47F87100197D4CFE00856BE2 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		47F8710D197D579F00856BE2 /* webService */ = {
+			isa = PBXGroup;
+			children = (
+				47F8712E197D5C4A00856BE2 /* ServiceArgs.h */,
+				47F8712F197D5C4A00856BE2 /* ServiceArgs.m */,
+				47F87130197D5C4A00856BE2 /* ServiceHandler.h */,
+				47F87131197D5C4A00856BE2 /* ServiceHandler.m */,
+				47F87132197D5C4A00856BE2 /* ServiceResult.h */,
+				47F87133197D5C4A00856BE2 /* ServiceResult.m */,
+			);
+			path = webService;
+			sourceTree = "<group>";
+		};
+		47F8711D197D5A3B00856BE2 /* xml */ = {
+			isa = PBXGroup;
+			children = (
+				47F8711E197D5A4700856BE2 /* GDataDefines.h */,
+				47F8711F197D5A4700856BE2 /* GDataTargetNamespace.h */,
+				47F87120197D5A4700856BE2 /* GDataXMLNode.h */,
+				47F87121197D5A4700856BE2 /* GDataXMLNode.m */,
+				47F87122197D5A4700856BE2 /* XmlNode.h */,
+				47F87123197D5A4700856BE2 /* XmlNode.m */,
+				47F87124197D5A4700856BE2 /* XmlParseHelper.h */,
+				47F87125197D5A4700856BE2 /* XmlParseHelper.m */,
+			);
+			name = xml;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,6 +334,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47F87129197D5AD900856BE2 /* GDataXMLNode.m in Sources */,
+				47F87135197D5C4A00856BE2 /* ServiceHandler.m in Sources */,
+				47F87136197D5C4A00856BE2 /* ServiceResult.m in Sources */,
+				47F8712A197D5AD900856BE2 /* XmlNode.m in Sources */,
+				47F87134197D5C4A00856BE2 /* ServiceArgs.m in Sources */,
+				47F8712B197D5AD900856BE2 /* XmlParseHelper.m in Sources */,
 				47F870EF197D4CFE00856BE2 /* AppDelegate.m in Sources */,
 				47F870EB197D4CFE00856BE2 /* main.m in Sources */,
 			);
@@ -403,8 +463,14 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "01_AFNetworking_Webservice/01_AFNetworking_Webservice-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"$(SDKROOT)/usr/include/libxml2\"",
+				);
 				INFOPLIST_FILE = "01_AFNetworking_Webservice/01_AFNetworking_Webservice-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -417,8 +483,14 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "01_AFNetworking_Webservice/01_AFNetworking_Webservice-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"$(SDKROOT)/usr/include/libxml2\"",
+				);
 				INFOPLIST_FILE = "01_AFNetworking_Webservice/01_AFNetworking_Webservice-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
