@@ -26,6 +26,7 @@
 		47F87134197D5C4A00856BE2 /* ServiceArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F8712F197D5C4A00856BE2 /* ServiceArgs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		47F87135197D5C4A00856BE2 /* ServiceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F87131197D5C4A00856BE2 /* ServiceHandler.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		47F87136197D5C4A00856BE2 /* ServiceResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F87133197D5C4A00856BE2 /* ServiceResult.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		59E47261197E161F0020D0E0 /* AFZSDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E47260197E161F0020D0E0 /* AFZSDManager.m */; };
 		863139856BCA43FC89CBF4B9 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14EEF74BD15640DF885D1E3A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +74,8 @@
 		47F87131197D5C4A00856BE2 /* ServiceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceHandler.m; sourceTree = "<group>"; };
 		47F87132197D5C4A00856BE2 /* ServiceResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceResult.h; sourceTree = "<group>"; };
 		47F87133197D5C4A00856BE2 /* ServiceResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceResult.m; sourceTree = "<group>"; };
+		59E4725F197E161F0020D0E0 /* AFZSDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFZSDManager.h; sourceTree = "<group>"; };
+		59E47260197E161F0020D0E0 /* AFZSDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFZSDManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +140,7 @@
 		47F870E4197D4CFE00856BE2 /* 01_AFNetworking_Webservice */ = {
 			isa = PBXGroup;
 			children = (
+				59E4725E197E15C70020D0E0 /* AFNetwork */,
 				47F8711D197D5A3B00856BE2 /* xml */,
 				47F8710D197D579F00856BE2 /* webService */,
 				47F870ED197D4CFE00856BE2 /* AppDelegate.h */,
@@ -202,6 +206,15 @@
 				47F87125197D5A4700856BE2 /* XmlParseHelper.m */,
 			);
 			name = xml;
+			sourceTree = "<group>";
+		};
+		59E4725E197E15C70020D0E0 /* AFNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				59E4725F197E161F0020D0E0 /* AFZSDManager.h */,
+				59E47260197E161F0020D0E0 /* AFZSDManager.m */,
+			);
+			path = AFNetwork;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -338,6 +351,7 @@
 				47F87135197D5C4A00856BE2 /* ServiceHandler.m in Sources */,
 				47F87136197D5C4A00856BE2 /* ServiceResult.m in Sources */,
 				47F8712A197D5AD900856BE2 /* XmlNode.m in Sources */,
+				59E47261197E161F0020D0E0 /* AFZSDManager.m in Sources */,
 				47F87134197D5C4A00856BE2 /* ServiceArgs.m in Sources */,
 				47F8712B197D5AD900856BE2 /* XmlParseHelper.m in Sources */,
 				47F870EF197D4CFE00856BE2 /* AppDelegate.m in Sources */,

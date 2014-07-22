@@ -76,7 +76,7 @@
     return [NSString stringWithFormat:@"xmlns=\"%@\"",[self nameSpace]];
 }
 
-+(id)requestResult:(ASIHTTPRequest*)httpRequest{
++(id)requestResult:(AFHTTPRequestOperation *)httpRequest{
     ServiceResult *entity=[[ServiceResult alloc] init];
     entity.request=httpRequest;
     XmlParseHelper *_helper=[[[XmlParseHelper alloc] initWithData:entity.xmlString] autorelease];

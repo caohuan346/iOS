@@ -7,14 +7,17 @@
 //
 
 #import "AppDelegate.h"
+#import "AFZSDManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "AFHTTPRequestOperation.h"
+
+#define api_news_list @"http://www.oschina.net/action/api/news_list"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    /*
     NSString *URLTmp = @"http://www.coneboy.com";
     NSString *URLTmp1 = [URLTmp stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];  //转码成UTF-8  否则可能会出现错误
     URLTmp = URLTmp1;
@@ -32,6 +35,26 @@
         NSLog(@"Failure: %@", error);
     }];
     [operation start];
+    */
+    
+    NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1, 1, 20];
+    [[AFZSDManager sharedInstance] GET:url parameters
+                                      :nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",operation.responseString);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"fail");
+    }];
+    
+    /*
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
+    [manager GET:@"http://www.baidu.com" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+     */
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

@@ -62,7 +62,9 @@
 
 #pragma mark - get public request
 -(AFHTTPRequestOperation *)commonSharedRequest:(ServiceArgs*)args{
-    AFHTTPRequestOperation  *request=[AFHTTPRequestOperation  requestWithURL:args.webURL];
+    /*
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:args.webURL];
+    AFHTTPRequestOperation *request= [[AFHTTPRequestOperation alloc]initWithRequest:urlRequest];
     
     NSString *msgLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
 	
@@ -80,7 +82,10 @@
     [request setValidatesSecureCertificate:NO];
     [request setTimeOutSeconds:30.0];//表示30秒请求超时
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
+    
     return request;
+     */
+    return nil;
 }
 
 +(AFHTTPRequestOperation *)commonSharedRequest:(ServiceArgs*)args{
@@ -95,6 +100,7 @@
 
 -(ServiceResult*)syncService:(ServiceArgs*)args error:(NSError**)error
 {
+    /*
     AFHTTPRequestOperation *request=[self requestWithServerArgs:args];
     //set sync
     [request startSynchronous];
@@ -103,6 +109,9 @@
     }
     //handle result
     return [ServiceResult requestResult:request];
+     */
+    
+    return nil;
 }
 
 -(ServiceResult*)syncServiceMethodName:(NSString*)methodName{
@@ -134,6 +143,7 @@
 }
 #pragma mark - asyn request
 -(AFHTTPRequestOperation *)requestWithServerArgs:(ServiceArgs*)args{
+    /*
     NSString *msgLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
     AFHTTPRequestOperation  *request=[AFHTTPRequestOperation  requestWithURL:args.webURL];
     
@@ -154,9 +164,13 @@
     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
     
     return request;
+     */
+    
+    return nil;
 }
 
 -(void)asynService:(ServiceArgs*)args{
+    /*
     [self.httpRequest clearDelegatesAndCancel];
     [self setHttpRequest:[AFHTTPRequestOperation  requestWithURL:args.webURL]];
     
@@ -191,6 +205,7 @@
     
     //asyn request
 	[self.httpRequest startAsynchronous];
+     */
 }
 
 -(void)asynService:(ServiceArgs*)args delegate:(id<ServiceHandlerDelegate>)theDelegate{
@@ -214,7 +229,8 @@
 }
 
 -(AFHTTPRequestOperation *)asynService:(ServiceArgs*)args progress:(void(^)(AFHTTPRequestOperation *))progress success:(void(^)(ServiceResult*))finished failed:(void(^)(NSError *error,NSDictionary *userInfo))failed{
-    
+    /*
+     
     //__block AFHTTPRequestOperation  *request=[self requestWithServerArgs:args];
     
     AFHTTPRequestOperation  *request=[self requestWithServerArgs:args];
@@ -238,6 +254,8 @@
     [request startAsynchronous];
     
     return request;
+     */
+    return nil;
 }
 
 -(void)asynServiceMethodName:(NSString*)methodName delegate:(id<ServiceHandlerDelegate>)theDelegate{
@@ -316,6 +334,7 @@
 #pragma mark - queue request
 //开始排列
 -(BOOL)cancelForMenthod:(NSString*)methodName{
+    /*
     NSArray *array=[[AFHTTPRequestOperation  sharedQueue] operations];
     for (AFHTTPRequestOperation  *request in array) {
         if ([request.requestHeaders[@"SOAPAction"] rangeOfString:methodName].location != NSNotFound) {
@@ -324,26 +343,34 @@
         }
     }
     return NO;
+     */
+    return NO;
 }
 
 -(void)resetQueue{
+    /*
     if (!self.networkQueue) {
         self.networkQueue = [[NSOperationQueue alloc] init];
     }
     [self.networkQueue reset];
+    
     //表示队列操作完成
     [self.networkQueue setQueueDidFinishSelector:@selector(queueFetchComplete:)];
     [self.networkQueue setRequestDidFinishSelector:@selector(requestFetchComplete:)];
     [self.networkQueue setRequestDidFailSelector:@selector(requestFetchFailed:)];
     [self.networkQueue setDelegate:self];
+     */
+
 }
 
 -(void)startQueue{
+    /*
     [self resetQueue];
     for (AFHTTPRequestOperation  *item in _requestList) {
         [self.networkQueue addOperation:item];
     }
     [self.networkQueue go];
+     */
 }
 
 //添加队列
