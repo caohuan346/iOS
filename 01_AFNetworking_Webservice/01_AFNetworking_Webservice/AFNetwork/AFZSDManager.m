@@ -59,12 +59,21 @@
                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
     ServiceArgs *args = [[ServiceArgs alloc] initWithMethodName:methodName soapParamsArray:paramsArray];
-    [self requestWithServerArgs:args];
     
+    
+    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST"
+                                                                   URLString:[[NSURL URLWithString:[args serviceURL] relativeToURL:self.baseURL] absoluteString] parameters:nil error:nil];
+    
+    [self handleRequest:request withServerArgs:args ];
+    
+    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];
+    [self.operationQueue addOperation:operation];
+    
+    return operation;
     return [self POST:[args serviceURL] parameters:nil success:success failure:failure];
 }
 
-- (void)requestWithServerArgs:(ServiceArgs*)args{
+- (void)handleRequest:(NSMutableURLRequest *)request withServerArgs:(ServiceArgs*)args{
     /*
      NSString *msgLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
      AFHTTPRequestOperation  *request=[AFHTTPRequestOperation requestWithURL:args.webURL];
@@ -96,7 +105,8 @@
     [self.requestSerializer setValue:msgLength forHTTPHeaderField:@"Content-Length"];
     [self.requestSerializer setValue:soapAction forHTTPHeaderField:@"SOAPAction"];
     
-//    self.requestSerializer.
+    [request setHTTPBody:[args.soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setTimeoutInterval:30.0];
 }
 
 #pragma mark - private
