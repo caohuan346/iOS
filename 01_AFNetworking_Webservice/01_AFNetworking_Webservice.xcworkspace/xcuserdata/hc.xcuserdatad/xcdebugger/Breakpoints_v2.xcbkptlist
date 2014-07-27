@@ -25,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "01_AFNetworking_Webservice/AppDelegate.m"
-            timestampString = "427737141.157236"
+            filePath = "01_AFNetworking_Webservice/webService/ServiceResult.m"
+            timestampString = "428123144.80511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "01_AFNetworking_Webservice/AppDelegate.m"
-            timestampString = "427822991.713107"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "-xmlString"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

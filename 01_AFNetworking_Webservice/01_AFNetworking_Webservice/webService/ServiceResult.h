@@ -8,16 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-//#import "ASIHTTPRequest.h"
 #import "AFHTTPRequestOperation.h"
 #import "XmlParseHelper.h"
 
 @interface ServiceResult : NSObject
 
-@property(nonatomic,retain) AFHTTPRequestOperation *request;
+@property(nonatomic,assign) AFHTTPRequestOperation *request;
+
 @property(nonatomic,readonly) NSDictionary *userInfo;
+
 @property(nonatomic,readonly) NSString *nameSpace;
+
 @property(nonatomic,readonly) NSString *methodName;
+
 @property(nonatomic,readonly) NSString *xmlnsAttr;
 
 //xml转换类
@@ -27,6 +30,6 @@
 //调用webservice方法里面的值
 @property(nonatomic,copy) NSString *xmlValue;
 
-+(id)requestResult:(AFHTTPRequestOperation *)httpRequest;
++(id)requestResult:(AFHTTPRequestOperation *)request;
 
 @end

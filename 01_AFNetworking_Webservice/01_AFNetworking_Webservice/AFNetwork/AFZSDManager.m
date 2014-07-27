@@ -8,6 +8,7 @@
 
 #import "AFZSDManager.h"
 #import "ServiceArgs.h"
+#import "ServiceResult.h"
 
 //#import "AFXMLRequestOperation.h"
 
@@ -16,6 +17,7 @@
 //#define kAFUrl @"http://192.168.1.213/action/api/"
 //#define kAFUrl @"http://www.oschina.net/action/api/"
 #define kAFUrl @"http://www.baidu.com"
+
 @implementation AFZSDManager
 
 + (AFZSDManager *)sharedInstance {
@@ -26,10 +28,10 @@
         _sharedInstance = [[AFZSDManager alloc] initWithBaseURL:[NSURL URLWithString:kAFUrl]];
         
         _sharedInstance.responseSerializer = [AFHTTPResponseSerializer serializer];
-        _sharedInstance.responseSerializer.acceptableContentTypes = [_sharedInstance.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
+        //_sharedInstance.responseSerializer.acceptableContentTypes = [_sharedInstance.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
         
         //[_sharedInstance.requestSerializer setValue:@"User-Agent" forHTTPHeaderField:@""];
-       // [_sharedClient setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"%@/%@", [Tool getOSVersion], [Config Instance].getIOSGuid]];
+        // [_sharedClient setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"%@/%@", [Tool getOSVersion], [Config Instance].getIOSGuid]];
         
     });
     
@@ -49,64 +51,69 @@
 	//[self setDefaultHeader:@"Accept" value:@"application/json"];
     
     //[self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [self.requestSerializer setValue:@"text/html" forHTTPHeaderField:@"content-type"];
+    //[self.requestSerializer setValue:@"text/html" forHTTPHeaderField:@"content-type"];
+    
     return self;
 }
 
-- (AFHTTPRequestOperation *)POSTMethod:(NSString *)methodName
-                      parameters:(NSArray *)paramsArray
-                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
+-(void)postRequest:(NSString *)methodName
+        parameters:(NSArray *)paramsArray
+           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure {
     
     ServiceArgs *args = [[ServiceArgs alloc] initWithMethodName:methodName soapParamsArray:paramsArray];
     
-    
-    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST"
-                                                                   URLString:[[NSURL URLWithString:[args serviceURL] relativeToURL:self.baseURL] absoluteString] parameters:nil error:nil];
-    
-    [self handleRequest:request withServerArgs:args ];
-    
-    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];
-    [self.operationQueue addOperation:operation];
-    
-    return operation;
-    return [self POST:[args serviceURL] parameters:nil success:success failure:failure];
-}
-
-- (void)handleRequest:(NSMutableURLRequest *)request withServerArgs:(ServiceArgs*)args{
-    /*
-     NSString *msgLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
-     AFHTTPRequestOperation  *request=[AFHTTPRequestOperation requestWithURL:args.webURL];
-     
-     //以下对请求信息添加属性前四句是必有的，第五句是soap信息。
-     [request addRequestHeader:@"Host" value:[args.webURL host]];
-     [request addRequestHeader:@"Content-Type" value:@"text/xml; charset=utf-8"];
-     [request addRequestHeader:@"Content-Length" value:msgLength];
-     [request addRequestHeader:@"SOAPAction" value:[self soapAction:args.serviceNameSpace methodName:args.methodName]];
-     [request setRequestMethod:@"POST"];
-     
-     //设置用户信息
-     //[self.httpRequest setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:args.methodName,@"name", nil]];
-     
-     //传soap信息
-     [request appendPostData:[args.soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
-     [request setValidatesSecureCertificate:NO];
-     [request setTimeOutSeconds:30.0];//表示30秒请求超时
-     [request setDefaultResponseEncoding:NSUTF8StringEncoding];
-     
-     return request;
-     */
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
+    NSString *soapLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
     NSString *soapAction = [self soapAction:args.serviceNameSpace methodName:args.methodName];
     
+    self.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
     [self.requestSerializer setValue:[args.webURL host] forHTTPHeaderField:@"Host"];
+    [self.requestSerializer setValue:soapLength forHTTPHeaderField:@"Content-Length"];
+    //[self.requestSerializer setValue:@"application/soap+xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [self.requestSerializer setValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"content-type"];
-    [self.requestSerializer setValue:msgLength forHTTPHeaderField:@"Content-Length"];
     [self.requestSerializer setValue:soapAction forHTTPHeaderField:@"SOAPAction"];
     
+    NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:@"POST" URLString:[args serviceURL] parameters:nil error:nil];
     [request setHTTPBody:[args.soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
     [request setTimeoutInterval:30.0];
+    AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];
+    [self.operationQueue addOperation:operation];
+}
+
+- (void)postWebserviceRequest:(NSString *)methodName
+                   parameters:(NSArray *)paramsArray
+                      success:(void(^)(ServiceResult* result))success
+                      failure:(void(^)(NSError *error,NSDictionary *userInfo))failure{
+    
+    [self postRequest:methodName
+           parameters:paramsArray
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  ServiceResult *serviceresult=[ServiceResult requestResult:operation];
+                  if (success) {
+                      success(serviceresult);
+                  }
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  if (failure) {
+                      if ([[operation.error description]  rangeOfString:@"cancelled"].location == NSNotFound  ) {
+                          failure(operation.error,operation.userInfo);
+                      }
+                  }
+              }];
+}
+
+- (BOOL)cancelWebserviceRequest:(NSString*)methodName {
+    NSArray *array=[self.operationQueue operations];
+    for (AFHTTPRequestOperation *operation in array) {
+        NSString *soapActionInfo = [self.requestSerializer HTTPRequestHeaders][@"SOAPAction"];
+        if ([soapActionInfo rangeOfString:methodName].location != NSNotFound) {
+            [operation cancel];
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 #pragma mark - private
@@ -122,4 +129,5 @@
     //return [NSString stringWithFormat:@"%@/ZSDServices/%@",[namespace stringByReplacingOccurrencesOfString:@"https:" withString:@"http:"],methodName];
     return [NSString stringWithFormat:@"%@/%@",[namespace stringByReplacingOccurrencesOfString:@"https:" withString:@"http:"],methodName];
 }
+
 @end

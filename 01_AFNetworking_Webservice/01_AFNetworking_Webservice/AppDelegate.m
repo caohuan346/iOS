@@ -18,55 +18,67 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     /*
-    NSString *URLTmp = @"http://www.coneboy.com";
-    NSString *URLTmp1 = [URLTmp stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];  //转码成UTF-8  否则可能会出现错误
-    URLTmp = URLTmp1;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: URLTmp]];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Success: %@", operation.responseString);
-        
-        NSString *requestTmp = [NSString stringWithString:operation.responseString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        //系统自带JSON解析
-        NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Failure: %@", error);
-    }];
-    [operation start];
-    */
+     NSString *URLTmp = @"http://www.coneboy.com";
+     NSString *URLTmp1 = [URLTmp stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];  //转码成UTF-8  否则可能会出现错误
+     URLTmp = URLTmp1;
+     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: URLTmp]];
+     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSLog(@"Success: %@", operation.responseString);
+     
+     NSString *requestTmp = [NSString stringWithString:operation.responseString];
+     NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+     //系统自带JSON解析
+     NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+     
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     NSLog(@"Failure: %@", error);
+     }];
+     [operation start];
+     */
     
     //访问帖子
     /*
-    NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1, 1, 20];
-    [[AFZSDManager sharedInstance] GET:url parameters
-                                      :nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@",operation.responseString);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"fail");
-    }];
-    */
+     NSString *url = [NSString stringWithFormat:@"%@?catalog=%d&pageIndex=%d&pageSize=%d", api_news_list, 1, 1, 20];
+     [[AFZSDManager sharedInstance] GET:url parameters
+     :nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSLog(@"%@",operation.responseString);
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     NSLog(@"fail");
+     }];
+     */
     
     NSMutableArray *params=[NSMutableArray array];
     [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"13467803712",@"mobileCode", nil]];
     [params addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"userID", nil]];
     
-    [[AFZSDManager sharedInstance] POSTMethod:@"getMobileCodeInfo" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-         NSLog(@"%@",operation.responseString);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"fail");
+    
+//    [[AFZSDManager sharedInstance] postRequest:@"getMobileCodeInfo" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSString *response = [[NSString alloc] initWithData:(NSData *)responseObject encoding:NSUTF8StringEncoding];
+//        NSLog(@"%@, %@", operation, response);
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSString *response = [[NSString alloc] initWithData:(NSData *)[operation responseObject] encoding:NSUTF8StringEncoding];
+//        NSLog(@"%@, %@", response, error);
+//    }];
+    
+    
+    [[AFZSDManager sharedInstance] postWebserviceRequest:@"getMobileCodeInfo" parameters:params success:^(ServiceResult *result) {
+        
+    } failure:^(NSError *error, NSDictionary *userInfo) {
+        
     }];
     
+    //[[AFZSDManager sharedInstance] cancelWebserviceRequest:@"getMobileCodeInfo"];
+    
     /*
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
-    [manager GET:@"http://www.baidu.com" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
+     [manager GET:@"http://www.baidu.com" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSLog(@"JSON: %@", responseObject);
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     NSLog(@"Error: %@", error);
+     }];
      */
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -84,7 +96,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
