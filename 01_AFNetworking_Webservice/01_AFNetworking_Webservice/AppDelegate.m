@@ -10,6 +10,7 @@
 #import "AFZSDManager.h"
 #import "UIImageView+AFNetworking.h"
 #import "AFHTTPRequestOperation.h"
+#import "ServiceResult.h"
 
 #define api_news_list @"http://www.oschina.net/action/api/news_list"
 
@@ -63,7 +64,11 @@
     
     
     [[AFZSDManager sharedInstance] postWebserviceRequest:@"getMobileCodeInfo" parameters:params success:^(ServiceResult *result) {
+        NSLog(@"%@",result.xmlParse);
         
+        NSArray *array=[result.xmlParse soapXmlSelectNodes:@"//xmlns:getMobileCodeInfoResult"];
+        NSString *numberInfo = array[0][@"text"];
+        NSLog(@"%@",numberInfo);
     } failure:^(NSError *error, NSDictionary *userInfo) {
         
     }];

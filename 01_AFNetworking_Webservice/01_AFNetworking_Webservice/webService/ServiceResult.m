@@ -10,82 +10,49 @@
 
 @implementation ServiceResult
 
-@synthesize request;
-@synthesize userInfo;
-@synthesize xmlParse;
-@synthesize xmlString;
-@synthesize xmlValue;
-@synthesize nameSpace;
-@synthesize methodName;
-@synthesize xmlnsAttr;
-
--(NSString*)nameSpace{
-    if (!nameSpace) {
-        if (self.request) {
-            //NSString *soapAction=[[self.request requestHeaders] objectForKey:@"SOAPAction"];
-            NSString *soapAction = [self.request.request objectForKey:@"SOAPAction"][@"SOAPAction"];
+-(id)initWithResultManger:(AFHTTPRequestOperationManager *)requestManager request:(AFHTTPRequestOperation *)request{
+    if (self = [super init]) {
+        if (request) {
+            //nameSpace
+            NSString *soapAction = [requestManager.requestSerializer HTTPRequestHeaders][@"SOAPAction"];
             NSRange range = [soapAction  rangeOfString:@"/" options:NSBackwardsSearch];
             if(range.location!=NSNotFound){
                 int pos=range.location;
-                nameSpace=[soapAction substringWithRange:NSMakeRange(0, pos+1)];
+                self.nameSpace=[soapAction substringWithRange:NSMakeRange(0, pos+1)];
             }
-        }
-
-    }
-    return nameSpace;
-}
-
--(NSString*)methodName{
-    if (!methodName) {
-        if (self.request) {
-            int len=[self.nameSpace length];
-            NSString *soapAction=[[self.request requestHeaders] objectForKey:@"SOAPAction"];
-            //NSString *soapAction = [self.requestManager.requestSerializer HTTPRequestHeaders][@"SOAPAction"];
-            if(len>0){
-                methodName=[soapAction stringByReplacingCharactersInRange:NSMakeRange(0,len) withString:@""];
-            }
-        }
-    }
-    return methodName;
-}
-
--(NSDictionary*)userInfo{
-    if (!userInfo) {
-        if (self.request) {
-            userInfo=[self.request userInfo];
-        }
-    }
-    return userInfo;
-}
-
--(NSString*)xmlString{
-    if (!xmlString) {
-        if (self.request) {
-            NSString *temp=[self.request responseString];
             
-            int statusCode = [self.request responseStatusCode];
-            NSError *error=[self.request error];
-            //发生错误，返回空
-            if (error||statusCode!=200) {
+            //xmlString
+            NSString *temp=[request responseString];
+            NSError *error=[request error];
+            if (error) {
                 temp=@"";
             }
-            xmlString=temp;
+            self.xmlString = temp;
+            
+            //userInfo
+            self.userInfo=[request userInfo];
         }
+
+        //mothodName
+        if (requestManager) {
+            int len=[self.nameSpace length];
+            NSString *soapAction = [requestManager.requestSerializer HTTPRequestHeaders][@"SOAPAction"];
+            if(len>0){
+                self.methodName = [soapAction stringByReplacingCharactersInRange:NSMakeRange(0,len) withString:@""];
+            }
+        }
+        
+        //xmlnsAttr
+        self.xmlnsAttr = [NSString stringWithFormat:@"xmlns=\"%@\"", self.nameSpace];
+        
+        self.request = request;
+        self.requestManager = requestManager;
+        XmlParseHelper *_helper=[[[XmlParseHelper alloc] initWithData:self.xmlString] autorelease];
+        self.xmlParse=_helper;
+        self.xmlValue=[_helper soapMessageResultXml:self.methodName];
     }
-    return xmlString;
-}
-
--(NSString*)xmlnsAttr{
-    return [NSString stringWithFormat:@"xmlns=\"%@\"",[self nameSpace]];
-}
-
-+(id)requestResult:(AFHTTPRequestOperation *)request{
-    ServiceResult *entity=[[ServiceResult alloc] init];
-    entity.request = request;
-    XmlParseHelper *_helper=[[[XmlParseHelper alloc] initWithData:entity.xmlString] autorelease];
-    entity.xmlParse=_helper;
-    entity.xmlValue=[_helper soapMessageResultXml:entity.methodName];
-    return [entity autorelease];
+    
+    return self;
 }
 
 @end

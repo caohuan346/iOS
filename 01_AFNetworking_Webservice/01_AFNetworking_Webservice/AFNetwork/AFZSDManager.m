@@ -88,7 +88,7 @@
     [self postRequest:methodName
            parameters:paramsArray
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  ServiceResult *serviceresult=[ServiceResult requestResult:operation];
+                  ServiceResult *serviceresult=[[ServiceResult alloc] initWithResultManger:self request:operation];
                   if (success) {
                       success(serviceresult);
                   }

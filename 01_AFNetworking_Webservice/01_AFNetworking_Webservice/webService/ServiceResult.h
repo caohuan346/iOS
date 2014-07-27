@@ -8,28 +8,32 @@
 
 #import <Foundation/Foundation.h>
 
-#import "AFHTTPRequestOperation.h"
+#import "AFHTTPRequestOperationManager.h"
 #import "XmlParseHelper.h"
 
 @interface ServiceResult : NSObject
 
+@property(nonatomic,assign) AFHTTPRequestOperationManager *requestManager;
+
 @property(nonatomic,assign) AFHTTPRequestOperation *request;
 
-@property(nonatomic,readonly) NSDictionary *userInfo;
+@property(nonatomic,retain) NSDictionary *userInfo;
 
-@property(nonatomic,readonly) NSString *nameSpace;
+@property(nonatomic,copy) NSString *nameSpace;
 
-@property(nonatomic,readonly) NSString *methodName;
+@property(nonatomic,copy) NSString *methodName;
 
-@property(nonatomic,readonly) NSString *xmlnsAttr;
+@property(nonatomic,copy) NSString *xmlnsAttr;
 
 //xml转换类
 @property(nonatomic,retain) XmlParseHelper *xmlParse;
+
 //原始返回的soap字符串
-@property(nonatomic,readonly) NSString *xmlString;
+@property(nonatomic,copy) NSString *xmlString;
+
 //调用webservice方法里面的值
 @property(nonatomic,copy) NSString *xmlValue;
 
-+(id)requestResult:(AFHTTPRequestOperation *)request;
+-(id)initWithResultManger:(AFHTTPRequestOperationManager *)requestManager request:(AFHTTPRequestOperation *)request;
 
 @end
