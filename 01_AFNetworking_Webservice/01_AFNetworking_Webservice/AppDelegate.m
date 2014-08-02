@@ -70,7 +70,7 @@
         NSString *numberInfo = array[0][@"text"];
         NSLog(@"%@",numberInfo);
     } failure:^(NSError *error, NSDictionary *userInfo) {
-        
+        NSLog(@"Error: %@", error);
     }];
     
     //[[AFZSDManager sharedInstance] cancelWebserviceRequest:@"getMobileCodeInfo"];
