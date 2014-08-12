@@ -25,9 +25,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         
-        _sharedInstance = [[AFZSDManager alloc] initWithBaseURL:[NSURL URLWithString:kAFUrl]];
+        _sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kAFUrl]];
         
-        _sharedInstance.responseSerializer = [AFHTTPResponseSerializer serializer];
+        //_sharedInstance.responseSerializer = [AFHTTPResponseSerializer serializer];
         //_sharedInstance.responseSerializer.acceptableContentTypes = [_sharedInstance.responseSerializer.acceptableContentTypes setByAddingObject: @"text/html"];
         
         //[_sharedInstance.requestSerializer setValue:@"User-Agent" forHTTPHeaderField:@""];
