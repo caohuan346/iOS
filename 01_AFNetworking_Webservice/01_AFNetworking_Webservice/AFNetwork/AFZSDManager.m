@@ -65,6 +65,24 @@
     
     NSString *soapLength = [NSString stringWithFormat:@"%d", [args.soapMessage length]];
     NSString *soapAction = [self soapAction:args.serviceNameSpace methodName:args.methodName];
+
+#warning mark - securityPolicy
+    //https:不用证书  not recommended for production 不推荐用于生产
+    /*
+    AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
+    [securityPolicy setAllowInvalidCertificates:YES];
+    [self setSecurityPolicy:securityPolicy];
+     */
+
+    //https2:使用证书
+    /*
+    AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
+    [securityPolicy setAllowInvalidCertificates:NO];
+    [securityPolicy setPinnedCertificates:@[certData]];
+    //[securityPolicy setSSLPinningMode:AFSSLPinningModeCertificate];
+     [securityPolicy setSSLPinningMode:AFSSLPinningModeNone];
+    self.securityPolicy = securityPolicy;
+    */
     
     self.responseSerializer = [[AFHTTPResponseSerializer alloc] init];
     [self.requestSerializer setValue:[args.webURL host] forHTTPHeaderField:@"Host"];
@@ -77,6 +95,7 @@
     [request setHTTPBody:[args.soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
     [request setTimeoutInterval:30.0];
     AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];
+    
     [self.operationQueue addOperation:operation];
 }
 
